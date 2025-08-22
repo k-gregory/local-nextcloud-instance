@@ -1,0 +1,36 @@
+- name: Install PHP-FPM and extensions
+  apt:
+    name:
+      - php{{ php_version }}-fpm
+      - php-cli
+      - php-gd
+      - php-mysql
+      - php-curl
+      - php-xml
+      - php-mbstring
+      - php-zip
+      - php-intl
+      - php-bcmath
+      - php-gmp
+      - php-imagick
+    state: present    
+
+- name: Ensure Nextcloud directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ php_fpm_user }}"
+    group: "{{ php_fpm_group }}"
+    mode: '0755'
+  loop:
+    - /var/www/nextcloud/config
+    - /var/www/nextcloud/data    
+
+- name: Deploy PHP-FPM pool configuration
+  template:
+    src: php-fpm-www.conf.j2
+    dest: /etc/php/{{ php_version }}/fpm/pool.d/www.conf
+  notify: Reload PHP-FPM
+
+- name: Reload PHP-FPM
+  shell: kill -USR2 $(pgrep -o php-fpm{{ php_version }})

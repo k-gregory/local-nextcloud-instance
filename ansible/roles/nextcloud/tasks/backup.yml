@@ -9,8 +9,9 @@
     state: directory
     owner: ansible
     group: ansible
-    mode: '0755'
+    mode: '0755'  
 
 - name: Backup current Nextcloud
   command: cp -r /var/www/nextcloud /var/backups/nextcloud/nextcloud-{{ ansible_date_time.iso8601 }}
-  when: nextcloud_dir.stat.exists
+  when: false
+#  when: nextcloud_dir.stat.exists

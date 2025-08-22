@@ -6,34 +6,3 @@
   apt:
     upgrade: dist
     autoremove: yes
-
-- name: Install extraction tools
-  apt:
-    name:
-      - tar
-      - bzip2
-    state: present
-
-- name: Install nginx
-  apt:
-    name:
-      - nginx
-    state: present        
-
-- name: Install PHP-FPM and extensions
-  apt:
-    name:
-      - php-fpm
-      - php-cli
-      - php-gd
-      - php-mysql
-      - php-curl
-      - php-xml
-      - php-mbstring
-      - php-zip
-      - php-intl
-      - php-bcmath
-      - php-gmp
-      - php-imagick
-    state: present
-    update_cache: yes

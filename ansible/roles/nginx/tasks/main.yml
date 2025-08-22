@@ -1,3 +1,9 @@
+- name: Install nginx
+  apt:
+    name:
+      - nginx
+    state: present
+
 - name: Copy Nextcloud site configuration
   copy:
     src: nextcloud-nginx.conf

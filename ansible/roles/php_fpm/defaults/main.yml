@@ -1,0 +1,3 @@
+php_version: "8.4"
+php_fpm_user: "www-data"
+php_fpm_group: "www-data"

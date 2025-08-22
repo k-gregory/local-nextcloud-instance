@@ -1,5 +1,10 @@
-- hosts: nextcloud
+- hosts: php_fpm
   become: yes
   roles:
     - nextcloud
+    - php_fpm
+
+- hosts: nginx
+  become: yes
+  roles:    
     - nginx

@@ -1,3 +1,10 @@
+- name: Install extraction tools
+  apt:
+    name:
+      - tar
+      - bzip2
+    state: present
+
 - name: Download latest Nextcloud release
   get_url:
     url: https://download.nextcloud.com/server/releases/latest.tar.bz2
@@ -17,3 +24,4 @@
     dest: /var/www/nextcloud
     remote_src: yes
     extra_opts: [--strip-components=1]
+  when: false
