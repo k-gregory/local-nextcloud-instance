@@ -17,14 +17,14 @@ docker build -t nextcloud-nginx -f docker/nginx.Dockerfile docker
 
 # Commented out because it doesn't work with NixOS/Rootless docker
 # Create user-defined network so containers can talk
-#docker network ls --format '{{.Name}}' | grep -q '^nextcloud-net$' || docker network create nextcloud-net
+docker network ls --format '{{.Name}}' | grep -q '^nextcloud-net$' || docker network create nextcloud-net
 
 # Run PHP-FPM container
 docker run -d \
   --name "$PHP_CONTAINER" \
   --restart unless-stopped \
+ --network nextcloud-net \
   -v nextcloud-data:/var/www/nextcloud \
-  --network host \
   nextcloud-php-fpm
 # --network nextcloud-net # Commented out because it doesn't work with NixOS/Rootless docker  
 
@@ -32,9 +32,9 @@ docker run -d \
 docker run -d \
   --name "$NGINX_CONTAINER" \
   --restart unless-stopped \
-  -p 8080:80 \
+  -p 80:80 \
+  --network nextcloud-net \
   -v nextcloud-data:/var/www/nextcloud:ro \
-  --network host \
   nextcloud-nginx
 # --network nextcloud-net # Commented out because it doesn't work with NixOS/Rootless docker
 

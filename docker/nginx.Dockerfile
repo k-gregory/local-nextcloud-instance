@@ -2,7 +2,7 @@ FROM debian:trixie
 
 # Install system upates and neccessities
 RUN apt update && \      
-    apt install -y sudo python3    
+    apt install -y sudo python3 inetutils-ping
 
 # Install nginx
 RUN apt install -y nginx inetutils-ping && \

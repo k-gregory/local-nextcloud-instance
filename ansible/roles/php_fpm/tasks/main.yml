@@ -5,6 +5,7 @@
       - php-cli
       - php-gd
       - php-mysql
+      - php-sqlite3
       - php-curl
       - php-xml
       - php-mbstring
@@ -14,6 +15,14 @@
       - php-gmp
       - php-imagick
     state: present    
+
+- name: Ensure Nextcloud files have correct ownership
+  file:
+    path: /var/www/nextcloud
+    state: directory
+    recurse: yes
+    owner: "{{ php_fpm_user }}"
+    group: "{{ php_fpm_group }}"
 
 - name: Ensure Nextcloud directories exist
   file:

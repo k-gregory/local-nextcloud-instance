@@ -2,7 +2,7 @@ FROM debian:trixie
 
 # Install system upates, neccessities
 RUN apt update && \
-    apt install -y sudo python3
+    apt install -y sudo python3 inetutils-ping
 
 # Install PHP-FPM
 RUN apt install -y php8.4-fpm && \
@@ -17,9 +17,6 @@ RUN chmod 440 /etc/sudoers.d/ansible
 
 # Install PHP-FPM
 RUN apt install -y php8.4-fpm
-
-# Expose PHP-FPM TCP port
-EXPOSE 9000
 
 # Run PHP-FPM in foreground
 CMD ["php-fpm8.4", "-F"]
