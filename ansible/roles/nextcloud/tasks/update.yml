@@ -1,0 +1,19 @@
+- name: Download latest Nextcloud release
+  get_url:
+    url: https://download.nextcloud.com/server/releases/latest.tar.bz2
+    dest: /tmp/nextcloud-latest.tar.bz2
+
+- name: Ensure Nextcloud directory exists
+  file:
+    path: /var/www/nextcloud
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Extract Nextcloud
+  unarchive:
+    src: /tmp/nextcloud-latest.tar.bz2
+    dest: /var/www/nextcloud
+    remote_src: yes
+    extra_opts: [--strip-components=1]

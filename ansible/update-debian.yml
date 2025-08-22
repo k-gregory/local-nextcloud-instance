@@ -1,0 +1,4 @@
+- hosts: nextcloud
+  become: yes
+  roles:
+    - debian

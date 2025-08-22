@@ -1,0 +1,5 @@
+- hosts: nextcloud
+  become: yes
+  roles:
+    - nextcloud
+    - nginx
