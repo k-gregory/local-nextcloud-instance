@@ -7,7 +7,7 @@ NGINX_CONTAINER="nextcloud-nginx-1"
 for c in "$PHP_CONTAINER" "$NGINX_CONTAINER"; do
     if docker ps -a --format '{{.Names}}' | grep -q "^$c$"; then
         echo "Container $c already exists. Exiting."
-        exit 0
+        #exit 0
     fi
 done
 
@@ -24,6 +24,7 @@ docker run -d \
   --name "$PHP_CONTAINER" \
   --restart unless-stopped \
   -v nextcloud-data:/var/www/nextcloud \
+  --network host \
   nextcloud-php-fpm
 # --network nextcloud-net # Commented out because it doesn't work with NixOS/Rootless docker  
 
@@ -33,6 +34,7 @@ docker run -d \
   --restart unless-stopped \
   -p 8080:80 \
   -v nextcloud-data:/var/www/nextcloud:ro \
+  --network host \
   nextcloud-nginx
 # --network nextcloud-net # Commented out because it doesn't work with NixOS/Rootless docker
 
