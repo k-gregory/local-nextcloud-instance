@@ -1,0 +1,7 @@
+- hosts: 
+  - apache2
+  become: yes
+  roles:
+    - apache2
+    - nextcloud_files
+    - apache2_nextcloud

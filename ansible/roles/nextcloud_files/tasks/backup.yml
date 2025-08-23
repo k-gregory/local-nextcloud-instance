@@ -1,0 +1,10 @@
+- name: Ensure backup directory exists
+  file:
+    path: /var/backups/nextcloud
+    state: directory
+    mode: '0755'
+
+- name: Backup current Nextcloud
+  archive:
+    path: /var/www/nextcloud
+    dest: /var/backups/nextcloud/nextcloud-{{ ansible_date_time.iso8601 }}.tar.gz

@@ -1,0 +1,14 @@
+- name: Install Apache packages
+  apt:
+    name: "{{ apache_packages }}"
+    state: present
+
+- name: Install PHP packages
+  apt:
+    name: "{{ php_packages }}"
+    state: present
+
+- name: Enable Apache PHP module
+  command: "a2enmod php{{ php_version }}"
+  args:
+    creates: "/etc/apache2/mods-enabled/php{{ php_version }}.load"

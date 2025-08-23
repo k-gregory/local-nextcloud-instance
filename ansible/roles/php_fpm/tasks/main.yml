@@ -16,25 +16,6 @@
       - php-imagick
     state: present    
 
-- name: Ensure Nextcloud files have correct ownership
-  file:
-    path: /var/www/nextcloud
-    state: directory
-    recurse: yes
-    owner: "{{ php_fpm_user }}"
-    group: "{{ php_fpm_group }}"
-
-- name: Ensure Nextcloud directories exist
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ php_fpm_user }}"
-    group: "{{ php_fpm_group }}"
-    mode: '0755'
-  loop:
-    - /var/www/nextcloud/config
-    - /var/www/nextcloud/data    
-
 - name: Deploy PHP-FPM pool configuration
   template:
     src: php-fpm-www.conf.j2

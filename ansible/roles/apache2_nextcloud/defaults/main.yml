@@ -1,0 +1,10 @@
+nextcloud_docroot: /var/www/nextcloud
+#nextcloud_servername: your.server.com # Uncomment when you buy a domain
+nextcloud_servername: localhost
+apache_required_modules:
+  - rewrite
+  - headers
+  - env
+  - dir
+  - mime
+  - php
