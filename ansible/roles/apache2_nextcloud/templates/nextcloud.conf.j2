@@ -1,6 +1,9 @@
 <VirtualHost *:80>
   DocumentRoot {{ nextcloud_docroot }}
   ServerName  {{ nextcloud_servername }}
+  {% if nextcloud_serveraliases is defined and nextcloud_serveraliases | length > 0 %}
+  ServerAlias {{ nextcloud_serveraliases | join(' ') }}
+  {% endif %}  
 
   <Directory {{ nextcloud_docroot }}>
     Require all granted

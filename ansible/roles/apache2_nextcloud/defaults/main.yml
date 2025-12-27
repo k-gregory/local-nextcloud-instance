@@ -1,10 +1,12 @@
 nextcloud_docroot: /var/www/nextcloud
 #nextcloud_servername: your.server.com # Uncomment when you buy a domain
 nextcloud_servername: localhost
+nextcloud_serveraliases:
+  - "192.168.50.56:8000"  
 apache_required_modules:
   - rewrite
   - headers
   - env
   - dir
   - mime
-  - php
+  - php{{ php_version }}
