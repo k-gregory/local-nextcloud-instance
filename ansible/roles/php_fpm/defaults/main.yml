@@ -1,2 +1,0 @@
-php_fpm_user: "www-data"
-php_fpm_group: "www-data"

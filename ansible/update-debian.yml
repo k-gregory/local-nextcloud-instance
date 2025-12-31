@@ -1,6 +1,0 @@
-- hosts: 
-  - nginx
-  - php_fpm
-  become: yes
-  roles:
-    - debian

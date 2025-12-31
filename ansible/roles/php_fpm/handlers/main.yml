@@ -1,2 +1,0 @@
-- name: Reload PHP-FPM
-  shell: kill -USR2 $(pgrep -o php-fpm{{ php_version }})
