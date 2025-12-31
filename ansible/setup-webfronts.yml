@@ -6,5 +6,6 @@
   roles:
     - debian
     - apache2
+    - letsencrypt
     - nextcloud_files
     - apache2_nextcloud

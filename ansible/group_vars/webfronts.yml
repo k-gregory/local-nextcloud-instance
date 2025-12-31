@@ -18,6 +18,9 @@ extra_packages:
   # Needed for Ansible to connect as unpriviledged user
   # https://docs.ansible.com/projects/ansible-core/2.19/playbook_guide/playbooks_privilege_escalation.html#risks-of-becoming-an-unprivileged-user
   - acl
+  # Let's Encrypt utils
+  - certbot   
+  - openssl
 
 apache_required_modules:
   - php{{ php_version }}
@@ -26,3 +29,4 @@ apache_required_modules:
   - env
   - dir
   - mime
+  - socache_shmcb

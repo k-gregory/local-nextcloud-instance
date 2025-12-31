@@ -1,4 +1,9 @@
-nextcloud_serveraliases:
-  - 46.62.253.242
+nextcloud_serveraliases: []
+nextcloud_servername: nextcloud.kgregory.net
 
-nextcloud_servername: 46.62.253.242
+letsencrypt_primary_domain: kgregory.net
+letsencrypt_domains:
+  - kgregory.net
+  - nextcloud.kgregory.net
+  - git.kgregory.net
+  - blog.kgregory.net

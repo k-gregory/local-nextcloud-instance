@@ -1,0 +1,15 @@
+# Centralized Let's Encrypt validation
+Alias /.well-known/acme-challenge/ /var/www/letsencrypt/.well-known/acme-challenge/
+
+<Directory "/var/www/letsencrypt/.well-known/acme-challenge/">
+    # Security and performance tweaks
+    Options None
+    AllowOverride None
+    ForceType text/plain
+    Require all granted
+    
+    # Optional: ensure no rewriting interferes with the challenge
+    <IfModule mod_rewrite.c>
+        RewriteEngine Off
+    </IfModule>
+</Directory>

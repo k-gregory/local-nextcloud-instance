@@ -1,0 +1,56 @@
+- name: Create the central acme-challenge directory
+  file:
+    path: /var/www/letsencrypt/.well-known/acme-challenge/
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+    recurse: yes
+
+- name: Deploy the Global Alias config
+  template:
+    src: letsencrypt_global.conf.j2
+    dest: /etc/apache2/conf-available/letsencrypt.conf
+  notify: Reload Apache
+
+- name: Enable the Global Alias
+  command: a2enconf letsencrypt
+  args:
+    creates: /etc/apache2/conf-enabled/letsencrypt.conf
+  notify: Reload Apache
+
+- name: Force Apache to reload before Certbot runs
+  meta: flush_handlers
+
+- name: Check if certificate exists
+  stat:
+    path: "/etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/fullchain.pem"
+  register: cert_file
+  when: letsencrypt_primary_domain is not none
+
+- name: Extract domains from existing certificate
+  shell: |
+    openssl x509 -in /etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/fullchain.pem -text -noout | \
+    grep -oP 'DNS:\K[a-z0-9.-]+'
+  register: existing_domains
+  when: cert_file.stat.exists
+  changed_when: false
+  failed_when: false 
+
+- name: Display domains found in existing certificate
+  ansible.builtin.debug:
+    var: existing_domains.stdout_lines
+  when: cert_file.stat.exists
+
+- name: Obtain or Update Let's Encrypt Certificate
+  command:
+    cmd: >
+      certbot certonly --dry-run --webroot
+      -w /var/www/letsencrypt
+      {{ '-d ' + (letsencrypt_domains | join(' -d ')) }}
+      --cert-name {{ letsencrypt_primary_domain }}
+      --non-interactive --agree-tos --email {{ admin_email }}
+  when: >
+    not cert_file.stat.exists or 
+    (letsencrypt_domains | difference(existing_domains.stdout_lines | default([])) | length > 0)
+  notify: Reload Apache
