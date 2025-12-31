@@ -1,1 +1,1 @@
-ansible-playbook -i inventory/local-vm bootstrap.yml -K -e "ansible_user=gregory"
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory/local-vm -e "ansible_user=gregory"  -k -K bootstrap.yml

@@ -1,1 +1,1 @@
-ansible-playbook -i inventory/hetzner bootstrap.yml  -e "ansible_user=root"
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory/hetzner -e "ansible_user=root" bootstrap.yml

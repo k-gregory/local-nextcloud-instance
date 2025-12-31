@@ -12,6 +12,12 @@ extra_packages:
   - php{{ php_version }}-xml
   - php{{ php_version }}-zip  
   - php{{ php_version }}-sqlite3
+  # Used to extract NextCloud Archive
+  - tar
+  - bzip2
+  # Needed for Ansible to connect as unpriviledged user
+  # https://docs.ansible.com/projects/ansible-core/2.19/playbook_guide/playbooks_privilege_escalation.html#risks-of-becoming-an-unprivileged-user
+  - acl
 
 apache_required_modules:
   - php{{ php_version }}

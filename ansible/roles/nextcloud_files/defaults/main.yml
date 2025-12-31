@@ -1,3 +1,4 @@
-nextcloud_archive: /tmp/nextcloud-latest.tar.bz2
+nextcloud_archive: /var/cache/nextcloud-latest.tar.bz2
 nextcloud_dir: /var/www/nextcloud
+nextcloud_data_dir: /var/nextcloud_data
 backup_dir: /var/backups/nextcloud

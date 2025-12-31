@@ -1,5 +1,9 @@
 - import_tasks: download_latest.yml
+
 - import_tasks: backup.yml
   when: nextcloud_download.changed
+
 - import_tasks: update.yml
   when: nextcloud_download.changed
+  
+- import_tasks: initial_configuration.yml

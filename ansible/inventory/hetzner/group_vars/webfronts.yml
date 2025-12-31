@@ -1,2 +1,4 @@
 nextcloud_serveraliases:
-  - 192.168.122.82
+  - 46.62.253.242
+
+nextcloud_servername: 46.62.253.242
