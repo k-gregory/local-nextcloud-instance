@@ -1,0 +1,11 @@
+- name: Copy webroot(/) VirtualHost configuration
+  template:
+    src: webroot.conf.j2
+    dest: /etc/apache2/sites-available/webroot.conf
+  notify: Reload Apache gracefully  
+
+- name: Enable Nextcloud site
+  command: a2ensite webroot.conf
+  args:
+    creates: /etc/apache2/sites-enabled/webroot.conf
+  notify: Reload Apache gracefully

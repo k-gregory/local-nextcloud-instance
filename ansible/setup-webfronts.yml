@@ -9,3 +9,4 @@
     - letsencrypt
     - nextcloud_files
     - apache2_nextcloud
+    - apache2_webroot

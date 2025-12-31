@@ -2,6 +2,7 @@
   template:
     src: nextcloud.conf.j2
     dest: /etc/apache2/sites-available/nextcloud.conf
+  notify: Reload Apache gracefully  
 
 - name: Enable Nextcloud site
   command: a2ensite nextcloud.conf

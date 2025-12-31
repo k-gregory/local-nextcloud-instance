@@ -11,13 +11,13 @@
   template:
     src: letsencrypt_global.conf.j2
     dest: /etc/apache2/conf-available/letsencrypt.conf
-  notify: Reload Apache
+  notify: Reload Apache gracefully
 
 - name: Enable the Global Alias
   command: a2enconf letsencrypt
   args:
     creates: /etc/apache2/conf-enabled/letsencrypt.conf
-  notify: Reload Apache
+  notify: Reload Apache gracefully
 
 - name: Force Apache to reload before Certbot runs
   meta: flush_handlers
@@ -45,7 +45,7 @@
 - name: Obtain or Update Let's Encrypt Certificate
   command:
     cmd: >
-      certbot certonly --dry-run --webroot
+      certbot certonly --staging --webroot
       -w /var/www/letsencrypt
       {{ '-d ' + (letsencrypt_domains | join(' -d ')) }}
       --cert-name {{ letsencrypt_primary_domain }}
@@ -53,4 +53,4 @@
   when: >
     not cert_file.stat.exists or 
     (letsencrypt_domains | difference(existing_domains.stdout_lines | default([])) | length > 0)
-  notify: Reload Apache
+  notify: Reload Apache gracefully

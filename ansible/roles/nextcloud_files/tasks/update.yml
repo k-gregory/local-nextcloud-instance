@@ -4,13 +4,6 @@
     state: directory
     mode: '0755'
 
-- name: Install extraction tools
-  apt:
-    name:
-      - tar
-      - bzip2
-    state: present    
-
 - name: Extract Nextcloud
   unarchive:
     src: "{{ nextcloud_archive }}"

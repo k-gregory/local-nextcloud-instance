@@ -24,6 +24,7 @@ extra_packages:
 
 apache_required_modules:
   - php{{ php_version }}
+  - ssl
   - rewrite
   - headers
   - env
