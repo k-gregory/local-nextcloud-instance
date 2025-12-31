@@ -1,4 +1,3 @@
 nextcloud_docroot: /var/www/nextcloud
-#nextcloud_servername: your.server.com # Uncomment when you buy a domain
 nextcloud_servername: localhost
 nextcloud_serveraliases: [] # Aliases such as "192.168.50.56:8000"

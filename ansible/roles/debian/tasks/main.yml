@@ -1,3 +1,6 @@
+- name: Run SSH hardening tasks
+  include_tasks: sshd_setup.yml
+
 - name: Install extra dependencies
   apt:
     name: "{{ extra_packages }}"

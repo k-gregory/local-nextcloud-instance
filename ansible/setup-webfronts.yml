@@ -1,8 +1,6 @@
 - hosts: 
-  - apache2
+  - webfronts
   become: yes
-  vars:
-    php_version: "8.4"
   roles:
     - debian
     - apache2

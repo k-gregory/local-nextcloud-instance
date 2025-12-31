@@ -7,9 +7,4 @@
   command: a2ensite nextcloud.conf
   args:
     creates: /etc/apache2/sites-enabled/nextcloud.conf
-
-- name: Disable default Apache site
-  command: a2dissite 000-default.conf
-
-- name: Reload Apache to apply configuration
-  command: apache2ctl -k graceful
+  notify: Reload Apache gracefully

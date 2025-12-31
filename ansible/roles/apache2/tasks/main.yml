@@ -7,3 +7,4 @@
 - name: Disable default Apache site
   command: a2dissite 000-default.conf
   notify: Reload Apache gracefully
+  when: false
