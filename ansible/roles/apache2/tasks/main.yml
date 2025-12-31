@@ -1,14 +1,9 @@
-- name: Install Apache packages
-  apt:
-    name: "{{ apache_packages }}"
-    state: present
-
-- name: Install PHP packages
-  apt:
-    name: "{{ php_packages }}"
-    state: present
-
-- name: Enable Apache PHP module
-  command: "a2enmod php{{ php_version }}"
+- name: Ensure required Apache modules are enabled
+  command: "a2enmod {{ item }}"
   args:
-    creates: "/etc/apache2/mods-enabled/php{{ php_version }}.load"
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+  loop: "{{ apache_required_modules }}"
+
+- name: Disable default Apache site
+  command: a2dissite 000-default.conf
+  notify: Reload Apache gracefully
