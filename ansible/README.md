@@ -10,3 +10,10 @@ You can make it work by launching playbook with explicit vault password location
 ```
 ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/inventory/local-vm ansible/setup-webfronts.yml
 ```
+
+## TODO
+
+1. Move away from www-data running nextcloud
+2. Switch to PHP-FPM
+3. Switch to PostgreSQL
+4. Configgure forgejo

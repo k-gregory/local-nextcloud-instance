@@ -45,7 +45,7 @@
 - name: Obtain or Update Let's Encrypt Certificate
   command:
     cmd: >
-      certbot certonly --staging --webroot
+      certbot certonly --webroot
       -w /var/www/letsencrypt
       {{ '-d ' + (letsencrypt_domains | join(' -d ')) }}
       --cert-name {{ letsencrypt_primary_domain }}
