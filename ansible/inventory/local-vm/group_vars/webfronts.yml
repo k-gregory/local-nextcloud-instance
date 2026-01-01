@@ -2,3 +2,6 @@ nextcloud_serveraliases:
   - 192.168.122.115
 
 nextcloud_servername: localhost
+
+ssl_cert_path: "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+ssl_key_path: "/etc/ssl/private/ssl-cert-snakeoil.key"

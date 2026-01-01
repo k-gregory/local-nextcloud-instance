@@ -1,10 +1,8 @@
 <VirtualHost *:443>
-    ServerName {{ letsencrypt_primary_domain }}
+    ServerName {{ webroot_domain | mandatory }}
     DocumentRoot /var/www/html
 
-    SSLEngine on
-    SSLCertificateFile /etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/fullchain.pem
-    SSLCertificateKeyFile /etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/privkey.pem
+    Include conf-available/ssl_params.conf
 
     <Directory /var/www/html>
         AllowOverride All
@@ -15,6 +13,6 @@
 </VirtualHost>
 
 <VirtualHost *:80>
-    ServerName {{ letsencrypt_primary_domain }}
-    Redirect permanent / https://{{ letsencrypt_primary_domain }}/
+    ServerName {{ webroot_domain | mandatory }}
+    Redirect permanent / https://{{ webroot_domain }}/
 </VirtualHost>

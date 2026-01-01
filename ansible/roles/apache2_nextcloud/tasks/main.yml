@@ -1,3 +1,8 @@
+- name: Ensure environment is ready
+  include_tasks: roles/apache2/tasks/check_snippet.yml
+  vars:
+    vhost_name: "Nextcloud"
+
 - name: Copy Nextcloud VirtualHost configuration
   template:
     src: nextcloud.conf.j2

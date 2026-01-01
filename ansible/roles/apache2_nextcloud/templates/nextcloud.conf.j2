@@ -5,8 +5,7 @@
     ServerAlias {{ nextcloud_serveraliases | join(' ') }}
     {% endif %}
 
-    # Redirect all traffic to HTTPS
-    # Note: Your Global Alias handles .well-known challenges before this kicks in
+    # Redirect all traffic to HTTPS    
     Redirect permanent / https://{{ nextcloud_servername }}/
 </VirtualHost>
 
@@ -18,10 +17,7 @@
     ServerAlias {{ nextcloud_serveraliases | join(' ') }}
     {% endif %}
 
-    # SSL Key Locations
-    SSLEngine on
-    SSLCertificateFile /etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/fullchain.pem
-    SSLCertificateKeyFile /etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/privkey.pem
+   Include conf-available/ssl_params.conf
 
     <Directory /var/www/nextcloud>
         Require all granted

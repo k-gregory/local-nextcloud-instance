@@ -1,0 +1,8 @@
+SSLEngine on
+SSLCertificateFile {{ ssl_cert_path | mandatory }}
+SSLCertificateKeyFile {{ ssl_key_path | mandatory }}
+
+# Add standard security hardening here once, instead of in every Vhost
+SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1
+SSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256...
+SSLHonorCipherOrder off

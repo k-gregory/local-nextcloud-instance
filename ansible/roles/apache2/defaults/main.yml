@@ -1,1 +1,4 @@
 apache_required_modules: []
+
+ssl_cert_path: null
+ssl_key_path:  null

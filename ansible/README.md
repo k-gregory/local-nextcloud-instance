@@ -22,3 +22,4 @@ ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/in
 7. I want a wiki
 8. I want a debian repo
 9. I want a CCTV control
+10. I doubt certbot will properly replace certificate when I add more domains.

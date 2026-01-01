@@ -1,0 +1,10 @@
+- name: Verify SSL snippet availability
+  ansible.builtin.assert:
+    that:
+      - apache_ssl_snippet_status is defined
+      - not apache_ssl_snippet_status.failed
+    fail_msg: >
+      [DEPRECATION/CONFIG ERROR]: The VirtualHost for {{ vhost_name | default('unknown') }} requires 
+      the global SSL snippet (/etc/apache2/conf-available/ssl_params.conf). 
+      This snippet handles modern TLS ciphers and the path to your certificates. 
+      Please ensure the 'Create standard SSL snippet' task has run successfully.
