@@ -1,6 +1,6 @@
 SSLEngine on
-SSLCertificateFile {{ ssl_cert_path | mandatory }}
-SSLCertificateKeyFile {{ ssl_key_path | mandatory }}
+SSLCertificateFile {{ ssl_cert_path | required_nonempty('ssl_cert_path') }}
+SSLCertificateKeyFile {{ ssl_key_path | required_nonempty('ssl_key_path') }}
 
 # Add standard security hardening here once, instead of in every Vhost
 SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1

@@ -9,7 +9,6 @@
     src: ssl_params.conf.j2
     dest: /etc/apache2/conf-available/ssl_params.conf
   register: apache_ssl_snippet_status  
-  notify: Reload Apache  
 
 - name: Disable default Apache site
   command: a2dissite 000-default.conf

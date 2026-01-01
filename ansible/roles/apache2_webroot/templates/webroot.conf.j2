@@ -1,5 +1,5 @@
 <VirtualHost *:443>
-    ServerName {{ webroot_domain | mandatory }}
+    ServerName {{ webroot_domain | required_nonempty('webroot_domain') }}
     DocumentRoot /var/www/html
 
     Include conf-available/ssl_params.conf
@@ -13,6 +13,6 @@
 </VirtualHost>
 
 <VirtualHost *:80>
-    ServerName {{ webroot_domain | mandatory }}
+    ServerName {{ webroot_domain | required_nonempty('webroot_domain') }}
     Redirect permanent / https://{{ webroot_domain }}/
 </VirtualHost>

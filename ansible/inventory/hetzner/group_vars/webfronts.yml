@@ -1,5 +1,7 @@
-nextcloud_serveraliases: []
+webroot_domain: kgregory.net
+
 nextcloud_servername: nextcloud.kgregory.net
+nextcloud_serveraliases: []
 
 letsencrypt_primary_domain: kgregory.net
 letsencrypt_domains:
@@ -8,5 +10,5 @@ letsencrypt_domains:
   - git.kgregory.net
   - blog.kgregory.net
 
-ssl_cert_path: "/etc/letsencrypt/live/{{ letsencrypt_primary_domain }/fullchain.pem"
+ssl_cert_path: "/etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/fullchain.pem"
 ssl_key_path:  "/etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/privkey.pem"  
