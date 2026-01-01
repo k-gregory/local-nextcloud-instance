@@ -54,3 +54,11 @@
     not cert_file.stat.exists or 
     (letsencrypt_domains | difference(existing_domains.stdout_lines | default([])) | length > 0)
   notify: Reload Apache gracefully
+
+- name: Create Certbot renewal hook to reload Apache
+  copy:
+    dest: /etc/letsencrypt/renewal-hooks/deploy/reload-apache.sh
+    content: |
+      #!/bin/bash
+      systemctl reload apache2
+    mode: '0755'  

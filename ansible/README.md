@@ -17,3 +17,8 @@ ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/in
 2. Switch to PHP-FPM
 3. Switch to PostgreSQL
 4. Configgure forgejo
+5. Configure automatic Let's Encrypt Certbot renewal
+6. Fix NextCloud warning from Admin page
+7. I want a wiki
+8. I want a debian repo
+9. I want a CCTV control
