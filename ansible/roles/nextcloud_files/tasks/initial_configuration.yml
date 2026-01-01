@@ -47,7 +47,6 @@
 #  when: nextcloud_install_result.changed
 
 - name: Update Nextcloud .htaccess
-  run_once: true
   ansible.builtin.command:
     cmd: php /var/www/nextcloud/occ maintenance:update:htaccess
   become: yes
