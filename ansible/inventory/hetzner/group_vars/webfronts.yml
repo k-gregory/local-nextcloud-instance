@@ -1,7 +1,5 @@
-webroot_domain: kgregory.net
-
+webroot_domain:       kgregory.net
 nextcloud_servername: nextcloud.kgregory.net
-nextcloud_serveraliases: []
 
 letsencrypt_primary_domain: kgregory.net
 letsencrypt_domains:

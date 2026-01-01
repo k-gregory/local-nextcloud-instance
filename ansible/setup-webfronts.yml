@@ -6,7 +6,8 @@
   roles:
     - debian
     - apache2
-    - letsencrypt
+    - { role: letsencrypt,  when: letsencrypt_primary_domain is not none }
+    - { role: ssl_snakeoil, when: letsencrypt_primary_domain is     none }
     - nextcloud_files
     - apache2_nextcloud
     - apache2_webroot

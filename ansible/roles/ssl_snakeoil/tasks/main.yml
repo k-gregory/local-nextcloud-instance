@@ -1,0 +1,30 @@
+- name: Ensure SSL directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+  # This extracts the directory from both paths and filters for uniqueness
+  loop: "{{ [ssl_cert_path | dirname, ssl_key_path | dirname] | unique }}"
+
+- name: Generate Wildcard Snakeoil Certificate
+  ansible.builtin.command: >
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048
+    -keyout {{ ssl_key_path }}
+    -out {{ ssl_cert_path }}
+    -subj "/CN={{ webroot_domain }}"
+    -addext "subjectAltName = DNS:{{ webroot_domain }}, DNS:*.{{ webroot_domain }}, IP:{{ ansible_default_ipv4.address }}"
+  args:
+    # This prevents re-generation if the cert already exists
+    creates: "{{ ssl_cert_path }}"
+
+- name: Set explicit permissions on the generated files
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "{{ ssl_key_path }}", mode: '0600' }
+    - { path: "{{ ssl_cert_path }}", mode: '0644' }

@@ -1,3 +1,13 @@
+- name: Ensure Let's Encrypt requirements are met
+  ansible.builtin.assert:
+    that:
+      - letsencrypt_primary_domain is not none
+      - letsencrypt_primary_domain | length > 0
+    fail_msg: >
+      [CONFIG ERROR]: The 'letsencrypt' role was called, but 'letsencrypt_primary_domain' is null or empty.
+      Check your inventory or the conditional logic in your main playbook.
+    success_msg: "Let's Encrypt requirements validated for {{ letsencrypt_primary_domain }}."
+
 - name: Create the central acme-challenge directory
   file:
     path: /var/www/letsencrypt/.well-known/acme-challenge/
