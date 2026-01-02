@@ -73,4 +73,16 @@
       ansible.builtin.command:
         cmd: php {{ nextcloud_www_dir }}/occ maintenance:update:htaccess
       become: yes
-      become_user: www-data  
+      become_user: www-data
+    
+    - name: Build NextCloud indicies
+      ansible.builtin.command:
+        cmd: php {{ nextcloud_www_dir }}/occ db:add-missing-indices
+      become: yes
+      become_user: www-data
+
+    - name: Repair MIME types
+      ansible.builtin.command:
+        cmd: php {{ nextcloud_www_dir }}/occ maintenance:repair --include-expensive
+      become: yes
+      become_user: www-data      

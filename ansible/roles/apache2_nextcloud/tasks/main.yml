@@ -15,7 +15,7 @@
     regexp: '^memory_limit'
     line: 'memory_limit = 512M'
     state: present
-  notify: Reload Apache gracefully
+  notify: Restart Apache
 
 - name: Set PHP memory limit for CLI
   lineinfile:
@@ -23,3 +23,12 @@
     regexp: '^memory_limit'
     line: 'memory_limit = 512M'
     state: present
+  notify: Restart Apache
+
+- name: Increase OPcache interned strings buffer
+  lineinfile:
+    path: /etc/php/{{ php_version }}/apache2/php.ini
+    regexp: '^;?\s*opcache\.interned_strings_buffer'
+    line: 'opcache.interned_strings_buffer=16'
+    state: present
+  notify: Restart Apache
