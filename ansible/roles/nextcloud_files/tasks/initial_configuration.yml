@@ -44,11 +44,11 @@
     chdir: /var/www/nextcloud
   become: yes
   become_user: www-data
-#  when: nextcloud_install_result.changed
+  when: nextcloud_install_result.changed
 
 - name: Update Nextcloud .htaccess
   ansible.builtin.command:
     cmd: php /var/www/nextcloud/occ maintenance:update:htaccess
   become: yes
   become_user: www-data
-#  when: nextcloud_install_result.changed  
+  when: nextcloud_install_result.changed  

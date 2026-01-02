@@ -1,4 +1,9 @@
-- import_tasks: download_latest.yml
+- name: Download latest Nextcloud release
+  get_url:
+    url: https://download.nextcloud.com/server/releases/latest.tar.bz2
+    dest: "{{ nextcloud_archive }}"
+    mode: '0644'
+  register: nextcloud_download
 
 - import_tasks: backup.yml
   when: nextcloud_download.changed

@@ -5,6 +5,7 @@
 
   vars:
     new_user: ansible_worker
+    local_ssh_pub_key: '~/.ssh/id_ed25519.pub'
   
   tasks:
     - name: Install Python 3 using raw SSH commands
@@ -28,7 +29,7 @@
       authorized_key:
         user: "{{ new_user }}"
         state: present
-        key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"        
+        key: "{{ lookup('file', local_ssh_pub_key) }}"        
 
     - name: Allow the new user passwordless sudo
       copy:

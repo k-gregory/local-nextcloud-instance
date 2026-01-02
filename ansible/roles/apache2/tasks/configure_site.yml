@@ -1,0 +1,31 @@
+- name: "Manage VirtualHost: {{ site_name }}"
+  block:
+    - name: "Copy {{ site_name }} configuration"
+      template:
+        src: "{{ site_src }}"
+        dest: "/etc/apache2/sites-available/{{ site_name }}"
+      register: site_config  
+
+    - name: "Enable {{ site_name }}"
+      command: "a2ensite {{ site_name }}"
+      args:
+        creates: "/etc/apache2/sites-enabled/{{ site_name }}"
+      register: site_enabled  
+
+    - name: Validate Apache configuration
+      command: apache2ctl configtest
+      # This task "changes" only if the previous two did, 
+      # and reloads Apache2 config in that case
+      changed_when: site_config.changed or site_enabled.changed
+      notify: Reload Apache gracefully
+
+  rescue:
+    - name: "Rollback {{ site_name }} on validation failure"
+      command: "a2dissite {{ site_name }}"
+      when: 
+        - site_enabled is defined
+        - site_config.changed or site_enabled.changed
+
+    - name: Force failure after rollback
+      fail:
+        msg: "Apache config validation failed for {{ site_name }}. Site has been disabled."

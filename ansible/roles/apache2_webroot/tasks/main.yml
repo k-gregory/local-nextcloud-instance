@@ -1,16 +1,10 @@
 - name: Ensure environment is ready
   include_tasks: roles/apache2/tasks/check_snippet.yml
   vars:
-    vhost_name: "Nextcloud"
+    vhost_name: "WebRoot(/)"
 
-- name: Copy webroot(/) VirtualHost configuration
-  template:
-    src: webroot.conf.j2
-    dest: /etc/apache2/sites-available/webroot.conf
-  notify: Reload Apache gracefully  
-
-- name: Enable Nextcloud site
-  command: a2ensite webroot.conf
-  args:
-    creates: /etc/apache2/sites-enabled/webroot.conf
-  notify: Reload Apache gracefully
+- name: "Configure WebRoot(/) Apache site"
+  include_tasks: roles/apache2/tasks/configure_site.yml
+  vars:
+    site_src: webroot.conf.j2
+    site_name: webroot.conf

@@ -3,14 +3,8 @@
   vars:
     vhost_name: "Nextcloud"
 
-- name: Copy Nextcloud VirtualHost configuration
-  template:
-    src: nextcloud.conf.j2
-    dest: /etc/apache2/sites-available/nextcloud.conf
-  notify: Reload Apache gracefully  
-
-- name: Enable Nextcloud site
-  command: a2ensite nextcloud.conf
-  args:
-    creates: /etc/apache2/sites-enabled/nextcloud.conf
-  notify: Reload Apache gracefully
+- name: "Configure NextCloud Apache site"
+  include_tasks: roles/apache2/tasks/configure_site.yml
+  vars:
+    site_src: nextcloud.conf.j2
+    site_name: nextcloud.conf
