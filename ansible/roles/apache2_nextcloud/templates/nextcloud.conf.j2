@@ -11,7 +11,7 @@
 
 # --- HTTPS Configuration ---
 <VirtualHost *:443>
-    DocumentRoot /var/www/nextcloud
+    DocumentRoot {{ nextcloud_www_dir }}
     ServerName {{ nextcloud_servername }}
     {% if nextcloud_serveraliases is defined and nextcloud_serveraliases | length > 0 %}
     ServerAlias {{ nextcloud_serveraliases | join(' ') }}
@@ -19,7 +19,7 @@
 
    Include conf-available/ssl_params.conf
 
-    <Directory /var/www/nextcloud>
+    <Directory {{ nextcloud_www_dir }}>
         Require all granted
         AllowOverride All
         Options FollowSymLinks MultiViews

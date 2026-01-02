@@ -1,2 +1,2 @@
-nextcloud_dir: /var/www/nextcloud
+nextcloud_www_dir: /var/www/nextcloud
 nextcloud_data_dir: /var/nextcloud_data

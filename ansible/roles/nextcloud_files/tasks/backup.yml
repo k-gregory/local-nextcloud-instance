@@ -1,6 +1,6 @@
 - name: Check if Nextcloud directory exists
   stat:
-    path: /var/www/nextcloud
+    path: "{{ nextcloud_www_dir }}"
   register: nextcloud_dir
 
 - name: Ensure backup directory exists
@@ -11,6 +11,6 @@
 
 - name: Backup current Nextcloud
   archive:
-    path: /var/www/nextcloud
+    path: "{{ nextcloud_www_dir }}"
     dest: /var/backups/nextcloud/nextcloud-{{ ansible_date_time.iso8601 }}.tar.gz
   when: nextcloud_dir.stat.exists
