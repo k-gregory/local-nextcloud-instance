@@ -8,3 +8,9 @@
   vars:
     site_src: webroot.conf.j2
     site_name: webroot.conf
+
+- name: Disable default Apache site
+  command: a2dissite 000-default.conf
+  args:
+    removes: /etc/apache2/sites-enabled/000-default.conf
+  notify: Reload Apache gracefully

@@ -21,6 +21,8 @@ extra_packages:
   # Let's Encrypt utils
   - certbot   
   - openssl
+  # Life improvements
+  - vim
 
 apache_required_modules:
   - php{{ php_version }}
