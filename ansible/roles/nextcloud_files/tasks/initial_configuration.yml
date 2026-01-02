@@ -23,32 +23,29 @@
       - --data-dir
       -  "{{ nextcloud_data_dir }}"
     chdir: "{{ nextcloud_www_dir }}"
-    creates: "{{ nextcloud_www_dir }}/config/config.php"
-  register: nextcloud_install_result  
+    creates: "{{ nextcloud_www_dir }}/config/config.php"  
 
-- name: Configure Nextcloud trusted_domains
-  become: yes
-  become_user: www-data
-  command:
-    # We use index + 1 because localhost is index 0
-    cmd: "php occ config:system:set trusted_domains {{ item_index + 1 }} --value={{ item }}"
-    chdir: "{{ nextcloud_www_dir }}"
-  loop: "{{ [nextcloud_servername] + (nextcloud_serveraliases | default([])) }}"
-  loop_control:
-    index_var: item_index
-  when: nextcloud_install_result.changed
-
-- name: Set Nextcloud Pretty URL parameters  
-  ansible.builtin.shell:
-    cmd: "php occ config:system:set 'htaccess.RewriteBase' --value='/'"
-    chdir: "{{ nextcloud_www_dir }}"
-  become: yes
-  become_user: www-data
-  when: nextcloud_install_result.changed
-
-- name: Update Nextcloud .htaccess
-  ansible.builtin.command:
-    cmd: php {{ nextcloud_www_dir }}/occ maintenance:update:htaccess
-  become: yes
-  become_user: www-data
-  when: nextcloud_install_result.changed  
+- block:
+    - name: Configure Nextcloud trusted_domains
+      command:
+        # We use index + 1 because localhost is index 0
+        cmd: "php occ config:system:set trusted_domains {{ item_index + 1 }} --value={{ item }}"
+        chdir: "{{ nextcloud_www_dir }}"
+      loop: "{{ [nextcloud_servername] + (nextcloud_serveraliases | default([])) }}"
+      loop_control:
+        index_var: item_index
+      become: yes
+      become_user: www-data
+    
+    - name: Set Nextcloud Pretty URL parameters  
+      ansible.builtin.shell:
+        cmd: "php occ config:system:set 'htaccess.RewriteBase' --value='/'"
+        chdir: "{{ nextcloud_www_dir }}"
+      become: yes
+      become_user: www-data      
+    
+    - name: Update Nextcloud .htaccess
+      ansible.builtin.command:
+        cmd: php {{ nextcloud_www_dir }}/occ maintenance:update:htaccess
+      become: yes
+      become_user: www-data  

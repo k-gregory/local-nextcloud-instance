@@ -25,3 +25,5 @@ ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/in
 10. I doubt certbot will properly replace certificate when I add more domains.
 11. Update VM /etc/hosts to resolve from .test domains to 127.0.0.1 (Or set up a dnsqmasq and use it both inside a VM and for host)
 12. Is it ok to generate *.webroot_domain SSL snakeoil certificate?
+13. Instead of config reload when chaning apache nextcloud memory limit, you should restart systemd service
+14. Set up cron jobs
