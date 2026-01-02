@@ -27,3 +27,6 @@ ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/in
 12. Is it ok to generate *.webroot_domain SSL snakeoil certificate?
 13. Instead of config reload when chaning apache nextcloud memory limit, you should restart systemd service
 14. Set up cron jobs
+15. Document how debian packages are collected and installed
+16. Allow postgres to listen on *
+17. When playbook is set to run with hosts: all, ansible/group_vars/postgres_servers.yml are not included

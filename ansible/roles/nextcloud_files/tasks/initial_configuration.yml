@@ -6,6 +6,25 @@
     group: www-data
     mode: '0750' # Very restrictive permissions
 
+- name: Create PostgreSQL user securely
+  ansible.builtin.shell: |
+    psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='nextcloudpg'" | grep -q 1 || \
+    psql -c "CREATE USER nextcloudpg WITH PASSWORD '$DB_PASS';"    
+  become: yes
+  become_user: postgres  
+  environment:
+    DB_PASS: "{{ vault_postgresql_nextcloud_password }}"
+  no_log: true
+
+- name: Create PostgreSQL database if it does not exist
+  ansible.builtin.shell: |
+    psql -lqt | cut -d \| -f 1 | grep -qw nextclouddb || \
+    psql -c "CREATE DATABASE nextclouddb OWNER nextcloudpg;"
+  become: yes
+  become_user: postgres  
+  register: db_creation
+  changed_when: "'CREATE DATABASE' in db_creation.stdout"  
+
 - name: Run Nextcloud Web-Installer via CLI
   become: yes
   become_user: www-data  # Must run as the webserver user
@@ -15,7 +34,13 @@
       - occ
       - maintenance:install
       - --database
-      - sqlite
+      - pgsql
+      - --database-name
+      - nextclouddb
+      - --database-user
+      - nextcloudpg
+      - --database-pass
+      - "{{ vault_postgresql_nextcloud_password }}"
       - --admin-user
       - "gregory"
       - --admin-pass

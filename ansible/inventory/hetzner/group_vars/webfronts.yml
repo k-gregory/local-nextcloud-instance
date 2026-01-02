@@ -9,4 +9,4 @@ letsencrypt_domains:
   - blog.kgregory.net
 
 ssl_cert_path: "/etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/fullchain.pem"
-ssl_key_path:  "/etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/privkey.pem"  
+ssl_key_path:  "/etc/letsencrypt/live/{{ letsencrypt_primary_domain }}/privkey.pem"

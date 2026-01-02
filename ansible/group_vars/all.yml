@@ -1,2 +1,15 @@
 nextcloud_www_dir: /var/www/nextcloud
 nextcloud_data_dir: /var/nextcloud_data
+
+php_version: "8.4"  
+
+common_packages:
+  # Used to extract NextCloud Archive
+  - tar
+  - bzip2
+    # Needed for Ansible to connect as unpriviledged user
+  # https://docs.ansible.com/projects/ansible-core/2.19/playbook_guide/playbooks_privilege_escalation.html#risks-of-becoming-an-unprivileged-user
+  - acl
+  # Life improvements
+  - vim
+  - tree

@@ -1,12 +1,26 @@
-- name: Install extra dependencies
-  apt:
-    name: "{{ extra_packages }}"
-    state: present
-    update_cache: yes
-
 - name: Upgrade all packages
   tags: ['upgrade']
   apt:
-    update_cache: yes
     upgrade: dist
     autoremove: yes
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+
+- block:
+    - name: Echo Debian packages
+      debug:
+        msg: "{{ role_packages | flatten | unique }}"
+
+    - name: Install extra dependencies
+      apt:
+        name: "{{ role_packages | flatten | unique }}"
+        state: present
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+  vars:
+    role_packages:
+      - "{{ apache_packages | default([]) }}"
+      - "{{ php_packages | default([]) }}"
+      - "{{ postgres_packages | default([]) }}"
+      - "{{ common_packages | default([]) }}"
+      - "{{ extra_packages | default([]) }}"
