@@ -4,6 +4,7 @@ workstation_packages:
   - pavucontrol
   - papirus-icon-theme
   - vim
+  - gimp
   - flatpak # 3rd-party packages
   - tree
   - linux-cpupower
