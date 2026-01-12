@@ -31,3 +31,4 @@ ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/in
 16. Allow postgres to listen on *
 17. When playbook is set to run with hosts: all, ansible/group_vars/postgres_servers.yml are not included
 18. Wait for postgres to become available
+19. Install headscale/tailscale

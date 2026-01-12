@@ -1,0 +1,14 @@
+workstation_packages:
+  - lollypop # Music player
+  - vlc
+  - pavucontrol
+  - papirus-icon-theme
+  - vim
+  - flatpak # 3rd-party packages
+  - tree
+  - linux-cpupower
+  - htop
+  - git
+  - g++
+  - tar
+  - borgbackup

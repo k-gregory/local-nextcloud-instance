@@ -1,0 +1,3 @@
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i 192.168.1.50, -e "ansible_user=gregory"  -k -K bootstrap.yml
+
+ansible-playbook -i 192.168.1.50, -u "ansible_worker" setup-workstation.yml

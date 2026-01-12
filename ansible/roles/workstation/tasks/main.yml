@@ -1,0 +1,24 @@
+- name: Disable NetworkManager-wait-online service
+  ansible.builtin.systemd:
+    name: NetworkManager-wait-online.service
+    enabled: false
+    state: stopped
+
+# Fixes totem(Gnome Video) not launching on Wayland
+- name: Set GTK_GL environment variable
+  ansible.builtin.copy:
+    dest: /etc/environment.d/99-gtk-gl.conf
+    content: "GTK_GL=gles"
+    mode: '0644'
+
+- name: Add Flathub repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Install VSCodium via Flatpak
+  community.general.flatpak:
+    name: com.vscodium.codium
+    state: present
+    remote: flathub

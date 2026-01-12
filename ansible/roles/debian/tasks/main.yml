@@ -23,4 +23,5 @@
       - "{{ php_packages | default([]) }}"
       - "{{ postgres_packages | default([]) }}"
       - "{{ common_packages | default([]) }}"
+      - "{{ workstation_packages | default([]) }}"      
       - "{{ extra_packages | default([]) }}"
