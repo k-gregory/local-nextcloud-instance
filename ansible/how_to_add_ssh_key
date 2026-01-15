@@ -1,0 +1,3 @@
+ansible all -i inventory/hetzner -u ansible_worker \
+  -m authorized_key \
+  -a "user=ansible_worker key='ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+i9EMq61GRkKKuJ3V0FHKNQ1GRP0d6sPQuZXpsmqkB gregory@laptop-vivo'"  
