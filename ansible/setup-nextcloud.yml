@@ -3,6 +3,7 @@
   become: yes
   roles:
     - debian
+    - postgres
 
 # 2. Install apache2 web frontend + mod_php and initialize nextcloud
 - hosts:

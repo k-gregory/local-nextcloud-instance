@@ -1,4 +1,4 @@
-Add password to `./vault_pass`
+Add password to `./vault_pass`. You can add 'nonce' if you don't need access to Hetzner.
 If running from `ansible` dir(where this file is located) it should work. 
 
 If you're running `ansible-playbook ...` from other directory, `.vault_pass` will not be found and you should expect weird error, 
