@@ -1,5 +1,5 @@
 - name: Ensure environment is ready
-  include_tasks: roles/apache2/tasks/check_snippet.yml
+  include_tasks: roles/apache2/tasks/check_ssl.yml
   vars:
     vhost_name: "WebRoot(/)"
 
