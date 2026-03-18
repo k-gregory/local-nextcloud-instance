@@ -1,3 +1,7 @@
+For remote laptop:
 ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i laptop-vivo.local, -e "ansible_user=gregory"  -k -K bootstrap.yml
-
 ansible-playbook -i laptop-vivo.local, -u "ansible_worker" setup-workstation.yml
+
+For local PC:
+#ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i localhost, -e "ansible_user=gregory"  -k -K bootstrap.yml
+ansible-playbook -i localhost, -c local setup-workstation.yml
