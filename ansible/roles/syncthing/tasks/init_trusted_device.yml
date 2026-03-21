@@ -23,15 +23,22 @@
   vars:
     target_host: "{{ groups['syncthing_blackboxes'][ansible_loop.index0] }}"
 
-- name: XML | Manually Patch Address and Untrusted Status
+# Remove ALL existing addresses for each device
+- name: XML | Remove all device addresses
   community.general.xml:
     path: "~/.local/state/syncthing/config.xml"
-    xpath: "/configuration/device[@id='{{ item }}']"
-    add_children:
-      - address: "tcp://{{ hostvars[groups['syncthing_blackboxes'][ansible_loop.index0]]['blackbox_ip'] }}:22000"
-      - untrusted: "true"
-      - compression: "metadata"
+    xpath: "/configuration/device[@id='{{ item }}']/address"
+    state: absent
   loop: "{{ blackbox_ids }}"
-  loop_control:
-    extended: true
-  notify: Restart Syncthing      
+  notify: Restart Syncthing
+
+# Re-add correct TCP + QUIC addresses
+- name: XML | Add TCP + QUIC addresses
+  community.general.xml:
+    path: "~/.local/state/syncthing/config.xml"
+    xpath: "/configuration/device[@id='{{ item.0 }}']"
+    add_children:
+      - address: "tcp://{{ item.1 }}:22000"
+      - address: "quic://{{ item.1 }}:22000"
+  loop: "{{ blackbox_ids | zip(groups['syncthing_blackboxes'] | map('extract', hostvars, 'blackbox_ip')) | list }}"
+  notify: Restart Syncthing

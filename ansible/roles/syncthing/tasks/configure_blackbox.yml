@@ -2,9 +2,8 @@
   community.general.xml:
     path: "~/.local/state/syncthing/config.xml"
     xpath: /configuration/gui
-    attribute: enabled
-    value: 'true'
-    #value: 'false'
+    attribute: enabled    
+    value: 'false'
 
 - name: Set VPS Network and Discovery Options
   community.general.xml:
