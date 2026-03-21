@@ -33,3 +33,5 @@ ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/in
 18. Wait for postgres to become available
 19. Install headscale/tailscale
 20. Set up Syncthing GUI password before launching the server. Handle blackbox IPs better. Check out how to use CLI without GUI. Consider templating.
+21. debian package installation doesn't work without sudo pwd (fixed by -K but it was relevant only for connection: local)
+22. Wait for syncthing web ui to become ready before doing CLI requests
