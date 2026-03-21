@@ -1,0 +1,5 @@
+- hosts: syncthing_blackboxes
+  become: yes
+  roles:
+    - debian
+    - syncthing_base
