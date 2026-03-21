@@ -1,0 +1,8 @@
+- debug:
+    msg: "Setting up Syncthing as a blackbox relay"
+
+- name: Enable lingering for the Syncthing user
+  become: yes
+  command: "loginctl enable-linger {{ syncthing_user }}"
+  args:
+    creates: "/var/lib/systemd/linger/{{ syncthing_user }}"

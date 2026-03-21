@@ -1,0 +1,9 @@
+- name: Disable Relays and Global Discovery (Keep Local for WiFi sync)
+  community.general.xml:
+    path: "~/.local/state/syncthing/config.xml"
+    xpath: "/configuration/options/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - { key: 'relaysEnabled', value: 'false' }
+    - { key: 'globalAnnounceEnabled', value: 'false' }
+    - { key: 'localAnnounceEnabled', value: 'true' }

@@ -1,2 +1,9 @@
 syncthing_packages:
   - syncthing
+  - python3-lxml
+
+syncthing_user: syncthing_usr
+
+syncthing_port: 35517
+
+is_blackbox: yes

@@ -1,0 +1,7 @@
+- name: Restart Syncthing
+  systemd:
+    name: syncthing
+    scope: user
+    state: restarted
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ syncthing_user_info.uid }}"    

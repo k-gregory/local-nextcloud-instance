@@ -1,3 +1,27 @@
-- name: Generate Syncthing identity
-  debug:
-    msg: "TBD"
+- name: Capture info for the currently active user
+  user:
+    name: "{{ syncthing_user }}"
+    state: present
+  register: syncthing_user_info
+  check_mode: yes
+
+- name: Generate Syncthing config and identity
+  command: syncthing generate --no-default-folder
+  args:
+    creates: ~/.local/state/syncthing/cert.pem
+
+
+- block:
+    - name: Configure Syncthing Node
+      include_tasks: "{{ 'configure_blackbox.yml' if is_blackbox | bool else 'configure_trusted_device.yml' }}"  
+  notify: Restart Syncthing
+
+
+- name: Start Syncthing user service
+  systemd:
+    name: syncthing
+    scope: user
+    state: started
+    enabled: yes    
+  environment:    
+    XDG_RUNTIME_DIR: "/run/user/{{ syncthing_user_info.uid }}"    

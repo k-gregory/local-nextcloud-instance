@@ -1,22 +1,44 @@
-- name: Syncthing local setup
+- name: Create separate user for Syncthing on blackboxes
+  hosts: syncthing_blackboxes
+  tasks:
+    - name: Load Syncthing role defaults
+      include_vars:
+        file: roles/syncthing/defaults/main.yml
+
+    - name: Ensure Syncthing user exists and capture their info
+      user:
+        name: "{{ syncthing_user }}"
+        shell: /bin/bash
+        state: present
+
+- name: Syncthing local initial setup
   hosts: localhost
   connection: local
   become: no
+  vars:
+    syncthing_user: "{{ ansible_user_id }}"
+    is_blackbox: no
   roles:
     - role: debian
       become: yes
     - role: syncthing      
-  #tasks:
-  #  - name: Run main tasks and trusted tasks
-  #    include_role:
-  #      name: syncthing
-  #      tasks_from: main.yml
-  #  - name: Specific Local logic
-  #    include_tasks: roles/syncthing/tasks/trusted_device.yml
+  tasks:
+    - name: Set up local machine as a trusted device
+      include_role:
+        name: syncthing
+        tasks_from: init_trusted_device.yml       
 
-- name: Syncthing Blackboxes initial set up
-  hosts: syncthing_blackboxes
+- name: Syncthing Blackboxes initial setup
+  hosts: syncthing_blackboxes  
   become: yes
+  become_user: "{{ syncthing_user }}"
   roles:
-    - debian
-    - syncthing
+    - role: debian
+      become_user: root
+    - role: syncthing
+  tasks:
+    - name: Set up Syncthing service for a blackbox machine
+      include_role:
+        name: syncthing
+        tasks_from: init_blackbox.yml    
+    
