@@ -1,0 +1,22 @@
+- name: Syncthing local setup
+  hosts: localhost
+  connection: local
+  become: no
+  roles:
+    - role: debian
+      become: yes
+    - role: syncthing      
+  #tasks:
+  #  - name: Run main tasks and trusted tasks
+  #    include_role:
+  #      name: syncthing
+  #      tasks_from: main.yml
+  #  - name: Specific Local logic
+  #    include_tasks: roles/syncthing/tasks/trusted_device.yml
+
+- name: Syncthing Blackboxes initial set up
+  hosts: syncthing_blackboxes
+  become: yes
+  roles:
+    - debian
+    - syncthing
