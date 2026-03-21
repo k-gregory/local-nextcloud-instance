@@ -9,5 +9,29 @@
       | map(attribute='syncthing_device_id') 
       | list }}"
 
-- debug:
-    var: blackbox_ids
+
+- name: Add Blackboxes to Local Machine
+  ansible.builtin.command:
+    cmd: >
+      syncthing cli config devices add 
+      --device-id {{ item }} 
+      --name {{ hostvars[target_host]['ansible_hostname'] | default(target_host) }}
+      --untrusted       
+  loop: "{{ blackbox_ids }}"
+  loop_control:
+    extended: true
+  vars:
+    target_host: "{{ groups['syncthing_blackboxes'][ansible_loop.index0] }}"
+
+- name: XML | Manually Patch Address and Untrusted Status
+  community.general.xml:
+    path: "~/.local/state/syncthing/config.xml"
+    xpath: "/configuration/device[@id='{{ item }}']"
+    add_children:
+      - address: "tcp://{{ hostvars[groups['syncthing_blackboxes'][ansible_loop.index0]]['blackbox_ip'] }}:22000"
+      - untrusted: "true"
+      - compression: "metadata"
+  loop: "{{ blackbox_ids }}"
+  loop_control:
+    extended: true
+  notify: Restart Syncthing      

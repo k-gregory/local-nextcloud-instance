@@ -15,6 +15,7 @@
   hosts: syncthing_blackboxes  
   become: yes
   become_user: "{{ syncthing_user }}"
+  gather_facts: yes
   roles:
     - role: debian
       become_user: root
@@ -40,5 +41,35 @@
     - name: Set up local machine as a trusted device
       include_role:
         name: syncthing
-        tasks_from: init_trusted_device.yml          
-    
+        tasks_from: init_trusted_device.yml  
+
+- name: Add local machine as trusted device to blackbox
+  hosts: syncthing_blackboxes
+  vars_files:
+    - roles/syncthing/defaults/main.yml
+  become: yes
+  become_user: "{{ syncthing_user }}"
+  tasks:
+    - name: Add Local Device to Blackbox
+      command:
+        cmd: >
+          syncthing cli config devices add 
+          --device-id {{ hostvars['localhost']['syncthing_device_id'] }} 
+          --name {{ hostvars['localhost']['ansible_hostname'] }}
+          --auto-accept-folders
+
+    - name: CLI | Get list of all Folder IDs
+      ansible.builtin.command: "syncthing cli config folders list"
+      register: folder_list
+      changed_when: false
+
+    - name: CLI | Add Localhost to every folder
+      ansible.builtin.command:
+        cmd: "syncthing cli config folders {{ item }} devices add --device-id {{ hostvars['localhost']['syncthing_device_id'] }}"
+      loop: "{{ folder_list.stdout_lines }}"
+      register: share_result
+      # Ignore if the device is already attached to the folder
+      failed_when: 
+        - share_result.rc != 0 
+        - "'already exists' not in share_result.stderr"
+      changed_when: share_result.rc == 0

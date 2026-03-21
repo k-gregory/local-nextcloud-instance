@@ -3,7 +3,8 @@
     path: "~/.local/state/syncthing/config.xml"
     xpath: /configuration/gui
     attribute: enabled
-    value: 'false'
+    value: 'true'
+    #value: 'false'
 
 - name: Set VPS Network and Discovery Options
   community.general.xml:
@@ -13,5 +14,5 @@
   loop:
     - { key: 'relaysEnabled', value: 'false' }
     - { key: 'globalAnnounceEnabled', value: 'false' }
-    - { key: 'localAnnounceEnabled', value: 'false' }
-    - { key: 'natEnabled', value: 'false' }
+    - { key: 'localAnnounceEnabled', value: 'true' }
+    - { key: 'natEnabled', value: 'true' }

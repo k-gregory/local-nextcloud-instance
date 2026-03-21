@@ -6,3 +6,7 @@
   command: "loginctl enable-linger {{ syncthing_user }}"
   args:
     creates: "/var/lib/systemd/linger/{{ syncthing_user }}"
+
+- name: Register public IP as a persistent fact
+  ansible.builtin.set_fact:
+    blackbox_ip: "{{ ansible_default_ipv4.address }}"    
