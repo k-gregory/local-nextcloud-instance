@@ -32,4 +32,4 @@ ANSIBLE_VAULT_PASSWORD_FILE=./ansible/.vault_pass ansible-playbook -i ansible/in
 17. When playbook is set to run with hosts: all, ansible/group_vars/postgres_servers.yml are not included
 18. Wait for postgres to become available
 19. Install headscale/tailscale
-20. Set up Syncthing GUI password before launching the server. Handle blackbox IPs better
+20. Set up Syncthing GUI password before launching the server. Handle blackbox IPs better. Check out how to use CLI without GUI. Consider templating.

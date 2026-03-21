@@ -1,4 +1,5 @@
 - name: Create separate user for Syncthing on blackboxes
+  become: yes
   hosts: syncthing_blackboxes
   tasks:
     - name: Load Syncthing role defaults
@@ -10,6 +11,12 @@
         name: "{{ syncthing_user }}"
         shell: /bin/bash
         state: present     
+
+    - name: Enable lingering for the Syncthing user
+      become: yes
+      command: "loginctl enable-linger {{ syncthing_user }}"
+      args:
+        creates: "/var/lib/systemd/linger/{{ syncthing_user }}"
 
 - name: Syncthing Blackboxes initial setup
   hosts: syncthing_blackboxes  

@@ -1,9 +1,10 @@
-- name: Disable Syncthing GUI
+- name: Enable Syncthing GUI
   community.general.xml:
     path: "~/.local/state/syncthing/config.xml"
     xpath: /configuration/gui
     attribute: enabled    
-    value: 'false'
+    #value: 'false'
+    value: 'true' # Can't disable because CLI uses it
 
 - name: Set VPS Network and Discovery Options
   community.general.xml:
