@@ -9,7 +9,21 @@
       user:
         name: "{{ syncthing_user }}"
         shell: /bin/bash
-        state: present
+        state: present     
+
+- name: Syncthing Blackboxes initial setup
+  hosts: syncthing_blackboxes  
+  become: yes
+  become_user: "{{ syncthing_user }}"
+  roles:
+    - role: debian
+      become_user: root
+    - role: syncthing
+  tasks:
+    - name: Set up Syncthing service for a blackbox machine
+      include_role:
+        name: syncthing
+        tasks_from: init_blackbox.yml    
 
 - name: Syncthing local initial setup
   hosts: localhost
@@ -26,19 +40,5 @@
     - name: Set up local machine as a trusted device
       include_role:
         name: syncthing
-        tasks_from: init_trusted_device.yml       
-
-- name: Syncthing Blackboxes initial setup
-  hosts: syncthing_blackboxes  
-  become: yes
-  become_user: "{{ syncthing_user }}"
-  roles:
-    - role: debian
-      become_user: root
-    - role: syncthing
-  tasks:
-    - name: Set up Syncthing service for a blackbox machine
-      include_role:
-        name: syncthing
-        tasks_from: init_blackbox.yml    
+        tasks_from: init_trusted_device.yml          
     

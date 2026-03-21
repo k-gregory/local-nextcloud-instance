@@ -10,6 +10,18 @@
   args:
     creates: ~/.local/state/syncthing/cert.pem
 
+- name: Get Syncthing Device ID from CLI
+  ansible.builtin.command: syncthing --device-id
+  register: syncthing_id_output
+  changed_when: false
+  failed_when: syncthing_id_output.rc != 0    
+
+- name: Set syncthing_device_id fact
+  ansible.builtin.set_fact:
+    syncthing_device_id: "{{ syncthing_id_output.stdout | trim }}"
+
+- debug:
+    msg: "dev ID: {{ syncthing_device_id }}"
 
 - block:
     - name: Configure Syncthing Node

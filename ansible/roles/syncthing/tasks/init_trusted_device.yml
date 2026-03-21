@@ -1,2 +1,13 @@
 - debug:
     msg: "Setting up Syncthing for trusted device"
+
+- name: Collect all blackbox device IDs into an array
+  set_fact:
+    blackbox_ids: "{{ groups['syncthing_blackboxes'] 
+      | map('extract', hostvars) 
+      | selectattr('syncthing_device_id', 'defined') 
+      | map(attribute='syncthing_device_id') 
+      | list }}"
+
+- debug:
+    var: blackbox_ids
