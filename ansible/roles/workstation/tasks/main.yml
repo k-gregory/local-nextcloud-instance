@@ -1,3 +1,13 @@
+- name: Create workstation user
+  ansible.builtin.user:
+    name: "{{ workstation_user }}"
+    groups: 
+      - kvm
+      - libvirt
+      - dialout
+    append: yes
+    state: present
+
 - name: Disable NetworkManager-wait-online service
   ansible.builtin.systemd:
     name: NetworkManager-wait-online.service
