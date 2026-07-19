@@ -17,3 +17,4 @@ workstation_packages:
   - borgbackup
   - qemu-system
   - virt-manager
+  - unattended-upgrades
