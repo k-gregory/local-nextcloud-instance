@@ -1,3 +1,5 @@
+workstation_user: gregory
+
 workstation_packages:
   - lollypop # Music player
   - vlc
@@ -13,3 +15,6 @@ workstation_packages:
   - g++
   - tar
   - borgbackup
+  - qemu-system
+  - virt-manager
+  - unattended-upgrades
